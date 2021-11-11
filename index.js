@@ -1,3 +1,9 @@
+function metricScope(metric) {
+  return {
+    metric: metric,
+  };
+}
+
 /**
  *
  * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
@@ -10,13 +16,12 @@
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  *
  */
-exports.lambdaHandler = async (event, context) => {
+exports.lambdaHandler = metricScope((metrics) => async (event, context) => {
   try {
     response = {
       statusCode: 200,
       body: JSON.stringify({
         message: "hello world",
-        // location: ret.data.trim()
       }),
     };
   } catch (err) {
@@ -25,4 +30,4 @@ exports.lambdaHandler = async (event, context) => {
   }
 
   return response;
-};
+});
