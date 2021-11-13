@@ -1,12 +1,15 @@
 // Import all functions from hello-from-lambda.js
 const lambda = require("../index.js");
+const event = require("../event.json");
 
 // This includes all tests for helloFromLambdaHandler()
 describe("Test for hello-from-lambda", function () {
   // This test invokes helloFromLambdaHandler() and compare the result
   it("Verifies successful response", async () => {
     // Invoke helloFromLambdaHandler()
-    const result = await lambda.lambdaHandler();
+    const result = await lambda.lambdaHandler(event, {
+      functionName: "foobar",
+    });
     /* 
             The expected result should match the return from your Lambda function.
             e.g. 
