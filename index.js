@@ -1,10 +1,12 @@
-const log = require("lambda-log");
+const llog = require("lambda-log");
 
 const addLogger = (handler) => {
   const wrappedHandler = async (...args) => {
-    const mylog = log;
-    mylog.options.meta.ip = args[0].requestContext.identity.sourceIp;
-    return await handler(mylog)(...args);
+    const log = llog;
+    if (args.length > 0) {
+            log.options.meta.ip = args[0].requestContext.identity.sourceIp;
+        }
+        return await handler(log)(...args);
   };
   return wrappedHandler;
 };
@@ -22,12 +24,12 @@ const addLogger = (handler) => {
  *
  */
 
-exports.lambdaHandler = addLogger((mylog) => async (event, context) => {
+exports.lambdaHandler = addLogger((log) => async (event, context) => {
   //console.log(`event: ${JSON.stringify(event, null, 2)}`);
   //console.log(`context: ${JSON.stringify(context, null, 2)}`);
   //console.log(`metrics: ${JSON.stringify(metrics, null, 2)}`);
 
-  mylog.info("hello world");
+  log.info("hello world");
   try {
     response = {
       statusCode: 200,
