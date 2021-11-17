@@ -3,7 +3,7 @@ const llog = require("lambda-log");
 const addLogger = (handler) => {
   const wrappedHandler = async (...args) => {
     const log = llog;
-    if (args.length > 0) {
+    if (args[0]?.requestContext) {
             log.options.meta.ip = args[0].requestContext.identity.sourceIp;
         }
         return await handler(log)(...args);
