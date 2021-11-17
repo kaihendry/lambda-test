@@ -1,16 +1,4 @@
-const llog = require("lambda-log");
-
-const addLogger = (handler) => {
-  const wrappedHandler = async (...args) => {
-    const log = llog;
-    if (args[0]?.requestContext) {
-            log.options.meta.ip = args[0].requestContext.identity.sourceIp;
-        }
-        return await handler(log)(...args);
-  };
-  return wrappedHandler;
-};
-
+const addLogger = require("./log");
 /**
  *
  * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
@@ -24,12 +12,12 @@ const addLogger = (handler) => {
  *
  */
 
-exports.lambdaHandler = addLogger((log) => async (event, context) => {
+exports.lambdaHandler = addLogger((mylog) => async (event, context) => {
   //console.log(`event: ${JSON.stringify(event, null, 2)}`);
   //console.log(`context: ${JSON.stringify(context, null, 2)}`);
   //console.log(`metrics: ${JSON.stringify(metrics, null, 2)}`);
 
-  log.info("hello world");
+  mylog.info("hello world");
   try {
     response = {
       statusCode: 200,
@@ -42,5 +30,11 @@ exports.lambdaHandler = addLogger((log) => async (event, context) => {
     return err;
   }
 
+  anotherFunction();
+
   return response;
 });
+
+function anotherFunction() {
+  log.info("uh oh!");
+}
