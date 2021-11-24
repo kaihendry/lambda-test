@@ -1,4 +1,4 @@
-const addLogger = require("./log");
+const addLogger = require('./log');
 /**
  *
  * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
@@ -13,28 +13,28 @@ const addLogger = require("./log");
  */
 
 exports.lambdaHandler = addLogger((mylog) => async (event, context) => {
-  //console.log(`event: ${JSON.stringify(event, null, 2)}`);
-  //console.log(`context: ${JSON.stringify(context, null, 2)}`);
-  //console.log(`metrics: ${JSON.stringify(metrics, null, 2)}`);
+    //console.log(`event: ${JSON.stringify(event, null, 2)}`);
+    //console.log(`context: ${JSON.stringify(context, null, 2)}`);
+    //console.log(`metrics: ${JSON.stringify(metrics, null, 2)}`);
 
-  mylog.info("hello world");
-  try {
-    response = {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: "hello world",
-      }),
-    };
-  } catch (err) {
-    console.log(err);
-    return err;
-  }
+    mylog.info('hello world');
+    try {
+        response = {
+            statusCode: 200,
+            body: JSON.stringify({
+                message: 'hello world',
+            }),
+        };
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
 
-  anotherFunction();
+    anotherFunction(mylog);
 
-  return response;
+    return response;
 });
 
-function anotherFunction() {
-  log.info("uh oh!");
+function anotherFunction(log) {
+    log.info('uh oh!');
 }
