@@ -6,7 +6,8 @@
   "author": "Kai Hendry",
   "license": "MIT",
   "dependencies": {
-    "lambda-log": "^3.1.0"
+    "lambda-log": "^3.1.0",
+    "xtz": "^1.0.2"
   },
   "devDependencies": {
     "husky": "^7.0.4",
